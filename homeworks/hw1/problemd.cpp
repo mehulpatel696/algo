@@ -1,52 +1,80 @@
-#include <iostream>
+#include <cstdio>
 #include <vector>
-#include <string>
-#include <utility>
-#include <unordered_set>
-#include <unordered_map>
-using namespace std;
-/*
- *1.Take the number of friends
-  2.Take how much each friend owes or is owed
-  3.See who is talking to whom at any given time
-  4.Now that you have all of this information figure out if every one can get their money back
-    HOW DO WE DO THAT
+#include <cstring>
+#include <map>
+#include <iostream>
 
- *
- *
- * */
-int main(){
+using namespace std;
+
+#define isp(is)  if(is) cout<<"POSSIBLE"<<endl; else cout<<"IMPOSSIBLE"<<endl;
+#define v(x) vector<x>
+#define m(i,b) map<i,b>
+#define mi(i,b) map<i,b>::iterator
+
+int owed[10005];
+m(int,int) remain;
+
+
+class DisjointSet {
+
+private:
+    v(int) p, heirarchy, ss;
+
+public:
+
+    DisjointSet(int N) {
+        p.assign(N, 0);
+        for (int i = 0; i < N; i++)  p[i] = i;
+        heirarchy.assign(N, 0);
+        ss.assign(N, 1);
+    }
+
+   int fs(int i) {
+        if(p[i] == i) return i;
+        else return p[i] = fs(p[i]);
+    }
+
+   void us(int i, int j) {
+        if (!(fs(i) == fs(j))) {
+            int x = fs(i), y = fs(j);
+            if (heirarchy[x] > heirarchy[y]) {
+                p[y] = x;
+                ss[fs(x)] += ss[fs(y)];
+            } else {
+                p[x] = y;
+                if (heirarchy[x] == heirarchy[y])  heirarchy[y]++;
+                ss[fs(y)] += ss[fs(x)];
+            }
+
+        }
+    }
+
+};
+
+int main() {
+
     int testcases;
     cin>>testcases;
-    while(testcases){
-        int n, m;
+    while (testcases--) {
+        int n, m, u, v;
         cin>>n>>m;
-        vector<int> owed(n);
-        vector< pair<int,int> > friends(m);
-        for(int i = 0; i < n; i++) cin>>owed[i];
-        for(int i = 0; i < m;i++){
-            int a,b;
-            cin>>a>>b;
-            pair<int,int> temp(a,b);
-            friends.push_back(temp);
+        DisjointSet ue(n);
+        remain.clear();
+        for(int i=0;i<n;i++)  cin>>owed[i];
+        for (int i = 0; i < m; i++) cin>>u>>v, ue.us(u, v);
+        for(int i=0;i<n;i++){
+            if(remain.count(ue.fs(i))==0) remain[ue.fs(i)] = owed[i];
+            else remain[ue.fs(i)] += owed[i];
         }
-        unordered_map<int, unordered_set<int> > friends_map;
-        for(int i = 0; i < friends.size(); i++){
-            friends_map[friends[i].first].insert(friends[i].second);
-            friends_map[friends[i].second].insert(friends[i].first);
+        bool isPossible = true;
+        for(mi(int, int) it = remain.begin();it != remain.end();it++){
+            if(it->second != 0) {
+                isPossible = false;
+                break;
+            }
         }
-
-        //Print the set and check if it worked
-        for(unordered_map<int, unordered_set<int> >::iterator i =  friends_map.begin(); i != friends_map.end(); i++)
-        {
-             cout<<i->first<<" : ";
-             for(unordered_set<int>::iterator j  =  (i->second).begin(); j != (i->second).end(); j++){
-                  cout<<*j<<" ";
-             }
-
-        }
-        testcases--;
+        isp(isPossible);
     }
-    return 0;
 
+    return 0;
 }
