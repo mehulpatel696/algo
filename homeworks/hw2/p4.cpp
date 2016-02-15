@@ -25,7 +25,6 @@ int minGasStations(int l, int g){
         if(total_radius == zero_radius) break;
         zero_radius = total_radius;
         close++;
-
     }
     int val;
     (zero_radius < l) ? val =  -1 : val =  g - close;
