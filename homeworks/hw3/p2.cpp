@@ -20,14 +20,6 @@ using namespace std;
 
 #define printv(v) for(int i = 0;i < v.size(); i++) cout<<v[i]<<endl;
 
-//int binarySearch(vector<int> &array, int start, int end, int elm){
-//    if(start > end) return -1;
-//    int mid = (start + end)/2;
-//    if(array[mid] == elm) return mid;
-//    if(array[mid] > elm) return binarySearch(array, start, mid - 1, elm);
-//    else return binarySearch(array, mid + 1, end, elm);
-//}
-
 
 int LIS(vector<int> &d, vector<int> &w, bool isDecreasing){
 
