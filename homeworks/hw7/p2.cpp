@@ -118,3 +118,32 @@ int main(){
 
 
 }
+/*        memset(alist, 0, sizeof alist);
+ memset(parent, -1, sizeof parent);
+
+ for(int i = 1; i <= n; i++) cin>>alist[i][i];
+
+ int m;
+ cin>>m;
+
+ for(int i = 0; i < m; i++){
+ int a,b,c;
+ cin>>a>>b>>c;
+ alist[a][b] = c;
+ }
+
+ int so_c, si_c;
+ cin>>so_c>>si_c;
+ int d;
+ for(int i = 0; i < so_c + si_c; i++){
+ cin>>d;
+ if(i < so_c){
+ alist[0][d] = 1;
+ } else {
+ alist[n+1][d] = 1;
+ }
+ }
+
+ print(alist, 6, 6);
+ // cout<<maximumFlow()<<endl;
+ */
