@@ -1,4 +1,4 @@
-#include <iostream>
+/#include <iostream>
 #include <vector>
 #include <bitset>
 #include <string>
@@ -118,7 +118,7 @@ int main(){
 
 
 }
-/*        memset(alist, 0, sizeof alist);
+*        memset(alist, 0, sizeof alist);
  memset(parent, -1, sizeof parent);
 
  for(int i = 1; i <= n; i++) cin>>alist[i][i];
